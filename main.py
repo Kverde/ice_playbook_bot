@@ -2,6 +2,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMa
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
 import telegram
 
+import source.db
 from source.setting import Setting
 from source.info_item_loader import InfoItemLoader
 
@@ -35,6 +36,19 @@ def sendAbout(bot, update):
                     text=about_text,
                     parse_mode=telegram.ParseMode.HTML)
 
+def sendItem(bot, update, item_index):
+    try:
+        item = itemLoader.loadItem(item_index)
+
+        bot.sendPhoto(chat_id=update.message.chat_id,
+                      photo=open(item.img, 'rb'))
+
+        bot.sendMessage(chat_id=update.message.chat_id,
+                        text=item.text,
+                        parse_mode=telegram.ParseMode.HTML)
+    except Exception as e:
+        print(e)
+
 def sendRandomItem(bot, update):
     try:
         item = itemLoader.loadRandomItem()
@@ -66,10 +80,18 @@ def sendHideMenu(bot, update):
                     reply_markup=reply_markup)
 
 def sendNextItem(bot, update):
-    pass
+    print('next_item')
+    try:
+        sendItem(bot, update, source.db.getNext(update.message.from_user.id))
+    except Exception as e:
+        print(e)
 
 def sendPrevItem(bot, update):
-    pass
+    print('prev_item')
+    try:
+        sendItem(bot, update, source.db.getPrev(update.message.from_user.id))
+    except Exception as e:
+        print(e)
 
 
 def cm_start(bot, update):
@@ -78,8 +100,8 @@ def cm_start(bot, update):
     sendMenu(bot, update)
 
 MENU_EVENTS = {
-    BUTTON_CAPTIONS[BUTTON_PREV]: sendNextItem,
-    BUTTON_CAPTIONS[BUTTON_NEXT]: sendPrevItem,
+    BUTTON_CAPTIONS[BUTTON_PREV]: sendPrevItem,
+    BUTTON_CAPTIONS[BUTTON_NEXT]: sendNextItem,
     BUTTON_CAPTIONS[BUTTON_RANDOM]: sendRandomItem,
     BUTTON_CAPTIONS[BUTTON_ABOUT]: sendAbout,
 }
@@ -109,7 +131,11 @@ def callb_text(bot, update):
     if update.message.text in MENU_EVENTS:
         MENU_EVENTS[update.message.text](bot, update)
     else:
+        print('text')
         sendRandomItem(bot, update)
+        user = update.message.from_user
+        print(user)
+        print('{} - {} - {} - {}'.format(user.id))
 
 updater = Updater(setting.telegram_token)
 
