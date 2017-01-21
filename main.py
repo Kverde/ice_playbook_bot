@@ -32,7 +32,7 @@ def cm_random(bot, update):
     domain.on_random_item(bot, update)
     botan.track(update.message, 'random')
 
-def cm_showMenu(bot, update):
+def cm_menu(bot, update):
     domain.on_menu(bot, update)
     botan.track(update.message, 'menu')
 
@@ -57,7 +57,7 @@ updater.dispatcher.add_handler(CommandHandler('start', cm_start))
 updater.dispatcher.add_handler(CommandHandler('about', cm_about))
 updater.dispatcher.add_handler(CommandHandler('next', cm_next))
 updater.dispatcher.add_handler(CommandHandler('prev', cm_prev))
-updater.dispatcher.add_handler(CommandHandler('showmenu', cm_showMenu))
+updater.dispatcher.add_handler(CommandHandler('menu', cm_menu))
 updater.dispatcher.add_handler(CommandHandler('hidemenu', cm_hideMenu))
 
 updater.dispatcher.add_handler(MessageHandler(Filters.text, callb_text))

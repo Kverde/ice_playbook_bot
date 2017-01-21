@@ -42,7 +42,7 @@ class Domain():
         self.db = Db(setting)
 
     def on_start(self, bot, update):
-        update.message.reply_text('Для навигации используйте меню или команды.')
+        update.message.reply_text('Привет!')
         self.on_menu(bot, update)
 
     def on_about(self, bot, update):
@@ -65,6 +65,8 @@ class Domain():
                     [KeyboardButton(BUTTON_CAPTIONS[BUTTON_ABOUT], callback_data=BUTTON_ABOUT)]]
 
         reply_markup = ReplyKeyboardMarkup(keyboard)
+
+        update.message.reply_text('Для навигации используйте меню', reply_markup=reply_markup)
 
     def on_hide_menu(self, bot, update):
         reply_markup = telegram.ReplyKeyboardHide()
