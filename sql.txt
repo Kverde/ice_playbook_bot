@@ -1,0 +1,28 @@
+-- SCHEMA: main
+
+DROP SCHEMA main ;
+CREATE SCHEMA main;
+
+DROP TABLE main."user";
+CREATE TABLE main."user"
+(
+    id integer NOT NULL,
+    first_name character varying(50)[] COLLATE pg_catalog."default",
+    last_name character varying(50)[] COLLATE pg_catalog."default",
+    username character varying(50)[] COLLATE pg_catalog."default",
+    CONSTRAINT "PK_USER" PRIMARY KEY (id)
+);
+
+-- SCHEMA: playbook_bot
+
+DROP SCHEMA playbook_bot ;
+CREATE SCHEMA playbook_bot;
+	
+DROP TABLE playbook_bot.current_item;
+CREATE TABLE playbook_bot.current_item
+(
+    user_id integer NOT NULL,
+    item_id integer,
+    CONSTRAINT "PK_CURRENT_ITEM" PRIMARY KEY (user_id)
+);
+	

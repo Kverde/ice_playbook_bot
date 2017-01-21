@@ -1,12 +1,14 @@
+import os
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
 from lib.botan import Botan
 from lib.setting import Setting
 from source.domain import Domain
 
+
 APP_ID = 'IcePlayBookBot'
 
-setting = Setting(APP_ID)
+setting = Setting(os.path.dirname(os.path.abspath(__file__)), APP_ID)
 domain = Domain(setting)
 botan = Botan(setting)
 

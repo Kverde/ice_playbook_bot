@@ -66,8 +66,6 @@ class Domain():
 
         reply_markup = ReplyKeyboardMarkup(keyboard)
 
-        update.message.reply_text('Для навигации используйте меню:', reply_markup=reply_markup)
-
     def on_hide_menu(self, bot, update):
         reply_markup = telegram.ReplyKeyboardHide()
         bot.sendMessage(chat_id=update.message.chat_id,

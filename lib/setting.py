@@ -4,12 +4,13 @@ import os
 
 class Setting():
 
-    def __init__(self, app_id):
+    def __init__(self, app_path, app_id):
         self.telegram_token = self.loadSetting(app_id, 'TELEGRAM_TOKEN')
         self.botan_token = self.loadSetting(app_id, 'BOTAN_TOKEN')
         self.database_url = self.loadSetting(app_id, 'DATABASE_URL')
 
-        self.data_path = r'data\\'
+        self.app_path = app_path
+        self.data_path = os.path.join(app_path, 'data')
 
     def loadSetting(self, app_id, setting_name):
         token = os.getenv(setting_name)
