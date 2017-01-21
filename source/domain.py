@@ -1,9 +1,8 @@
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup, ReplyKeyboardMarkup, KeyboardButton
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackQueryHandler
+from telegram import ReplyKeyboardMarkup, KeyboardButton
 import telegram
 import os
 
-from source import db
+from source.db import Db
 from source.info_item_loader import InfoItemLoader
 
 BUTTON_PREV = 0
@@ -40,6 +39,8 @@ class Domain():
 
         self.item_loader = InfoItemLoader(setting)
 
+        self.db = Db(setting)
+
     def on_start(self, bot, update):
         update.message.reply_text('Для навигации используйте меню или команды.')
         self.on_menu(bot, update)
@@ -74,11 +75,11 @@ class Domain():
                         reply_markup=reply_markup)
 
     def on_next_item(self, bot, update):
-        self.send_item_index(bot, update, db.getNext(update.message.from_user.id))
+        self.send_item_index(bot, update, self.db.getNext(update.message.from_user.id))
         return 'next'
 
     def on_prev_item(self, bot, update):
-        self.send_item_index(bot, update, db.getPrev(update.message.from_user.id))
+        self.send_item_index(bot, update, self.db.getPrev(update.message.from_user.id))
         return 'prev'
 
     def on_text(self, bot, update):

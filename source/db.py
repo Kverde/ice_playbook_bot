@@ -1,53 +1,55 @@
 import psycopg2
 
+class Db():
 
-DATABASE_URL = r'postgres://test_user:qwerty@192.168.1.39:5432/test_database'
+    def __init__(self, setting):
+        self.setting = setting
 
-def getNext(user_id):
+    def getNext(self, user_id):
 
-    connect = psycopg2.connect(DATABASE_URL)
-    cursor = connect.cursor()
+        connect = psycopg2.connect(self.setting.database_url)
+        cursor = connect.cursor()
 
-    cursor.execute("SELECT item_id FROM playbook_bot.current_item where user_id = " + str(user_id))
+        cursor.execute("SELECT item_id FROM playbook_bot.current_item where user_id = " + str(user_id))
 
-    if cursor.rowcount == 0:
-        res = 1
-        cursor.execute("insert into playbook_bot.current_item(user_id, item_id) values({}, 1)".format(user_id))
-    else:
-        res = cursor.fetchall()[0][0]
-
-        if res == 47:
+        if cursor.rowcount == 0:
             res = 1
+            cursor.execute("insert into playbook_bot.current_item(user_id, item_id) values({}, 1)".format(user_id))
         else:
-            res = res + 1
+            res = cursor.fetchall()[0][0]
 
-        cursor.execute("update playbook_bot.current_item set item_id = {} where user_id = {}".format(res, user_id))
+            if res == 47:
+                res = 1
+            else:
+                res = res + 1
 
-    connect.commit()
-    connect.close()
+            cursor.execute("update playbook_bot.current_item set item_id = {} where user_id = {}".format(res, user_id))
 
-    return res
+        connect.commit()
+        connect.close()
 
-def getPrev(user_id):
+        return res
 
-    connect = psycopg2.connect(DATABASE_URL)
-    cursor = connect.cursor()
+    def getPrev(self, user_id):
 
-    cursor.execute("SELECT item_id FROM playbook_bot.current_item where user_id = " + str(user_id))
+        connect = psycopg2.connect(self.setting.database_url)
+        cursor = connect.cursor()
 
-    if cursor.rowcount == 0:
-        res = 1
-        cursor.execute("insert into playbook_bot.current_item(user_id, item_id) values({}, 1)".format(user_id))
-    else:
-        res = cursor.fetchall()[0][0]
-        if res == 1:
-            res = 47
+        cursor.execute("SELECT item_id FROM playbook_bot.current_item where user_id = " + str(user_id))
+
+        if cursor.rowcount == 0:
+            res = 1
+            cursor.execute("insert into playbook_bot.current_item(user_id, item_id) values({}, 1)".format(user_id))
         else:
-            res = res - 1
+            res = cursor.fetchall()[0][0]
+            if res == 1:
+                res = 47
+            else:
+                res = res - 1
 
-        cursor.execute("update playbook_bot.current_item set item_id = {} where user_id = {}".format(res, user_id))
+            cursor.execute("update playbook_bot.current_item set item_id = {} where user_id = {}".format(res, user_id))
 
-    connect.commit()
-    connect.close()
+        connect.commit()
+        connect.close()
 
-    return res
+        return res
