@@ -57,6 +57,7 @@ updater.dispatcher.add_handler(CommandHandler('start', cm_start))
 updater.dispatcher.add_handler(CommandHandler('about', cm_about))
 updater.dispatcher.add_handler(CommandHandler('next', cm_next))
 updater.dispatcher.add_handler(CommandHandler('prev', cm_prev))
+updater.dispatcher.add_handler(CommandHandler('random', cm_random))
 updater.dispatcher.add_handler(CommandHandler('menu', cm_menu))
 updater.dispatcher.add_handler(CommandHandler('hidemenu', cm_hideMenu))
 
