@@ -7,6 +7,7 @@ class Setting():
     def __init__(self, app_id):
         self.telegram_token = self.loadSetting(app_id, 'TELEGRAM_TOKEN')
         self.botan_token = self.loadSetting(app_id, 'BOTAN_TOKEN')
+        self.database_url = self.loadSetting(app_id, 'DATABASE_URL')
 
         self.data_path = r'data\\'
 

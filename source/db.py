@@ -1,8 +1,11 @@
 import psycopg2
 
+
+DATABASE_URL = r'postgres://test_user:qwerty@192.168.1.39:5432/test_database'
+
 def getNext(user_id):
 
-    connect = psycopg2.connect(database='test_database', user='test_user', host='192.168.1.39', password='qwerty')
+    connect = psycopg2.connect(DATABASE_URL)
     cursor = connect.cursor()
 
     cursor.execute("SELECT item_id FROM playbook_bot.current_item where user_id = " + str(user_id))
@@ -27,7 +30,7 @@ def getNext(user_id):
 
 def getPrev(user_id):
 
-    connect = psycopg2.connect(database='test_database', user='test_user', host='192.168.1.39', password='qwerty')
+    connect = psycopg2.connect(DATABASE_URL)
     cursor = connect.cursor()
 
     cursor.execute("SELECT item_id FROM playbook_bot.current_item where user_id = " + str(user_id))

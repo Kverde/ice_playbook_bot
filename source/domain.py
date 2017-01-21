@@ -19,11 +19,13 @@ BUTTON_CAPTIONS = {
 }
 
 about_text = '''
-Записи берутся из разных источников, список:
+Список статей, и авторов:
 
 <a href="https://techcrunch.com/2010/08/25/scvngr-game-mechanics/">SCVNGR game mechanics</a>
 
-Если здесь не упомянут какой-то из источников записей, пожалуйста, свяжитесь с @Kverde
+Если упомянуты не все, пожалуйста, сообщите об этом.
+
+Для связи с разработчиком используйте Telegram @KonstantinShpilko, сайт http://way23.ru
 '''
 
 class Domain():
