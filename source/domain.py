@@ -18,6 +18,8 @@ BUTTON_CAPTIONS = {
 }
 
 about_text = '''
+Пожалуйста, оцените этого бота https://telegram.me/storebot?start=IcePlaybookBot
+
 Список статей, и авторов:
 
 <a href="https://techcrunch.com/2010/08/25/scvngr-game-mechanics/">SCVNGR game mechanics</a>
